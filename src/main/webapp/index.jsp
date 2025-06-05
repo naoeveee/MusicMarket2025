@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import ="dto.Music" %>
+<jsp:useBean id="musicDAO" class="dao.MusicRepository" scope="session" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -59,73 +62,42 @@
         </div>
     </header>
 
+	<!-- 도서 목록 가져오기 -->
+	<%
+		ArrayList<Music> listOfMusics=musicDAO.getAllMusics();
+	%>
+	
     <!-- Section-->
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 
+    <%
+		for (int i=0;i<listOfMusics.size();i++){
+			Music music=listOfMusics.get(i);
+	%>
+                
+                
                 <!-- 상품 카드 샘플 1 -->
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- 제품 이미지-->
-                        <img class="card-img-top" src="${pageContext.request.contextPath}/resources/assets/product1.jpg" alt="상품 이미지" />
-                        <!-- 제품 정보-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- 제품 이름-->
-                                <h5 class="fw-bolder">인기 상품 1</h5>
-                                ₩49,000
-                            </div>
-                        </div>
-                        <!-- 액션 버튼-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">장바구니에 추가</a></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 상품 카드 샘플 2 -->
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- 세일 배지-->
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">세일</div>
-                        <!-- 제품 이미지-->
-                        <img class="card-img-top" src="${pageContext.request.contextPath}/resources/assets/product2.jpg" alt="상품 이미지" />
-                        <!-- 제품 정보-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- 제품 이름-->
-                                <h5 class="fw-bolder">세일 상품</h5>
-                                <span class="text-muted text-decoration-line-through">₩75,000</span>
-                                ₩50,000
-                            </div>
-                        </div>
-                        <!-- 액션 버튼-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">장바구니에 추가</a></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 상품 카드 샘플 3 -->
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- 제품 이미지-->
-                        <img class="card-img-top" src="${pageContext.request.contextPath}/resources/assets/product3.jpg" alt="상품 이미지" />
-                        <!-- 제품 정보-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- 제품 이름-->
-                                <h5 class="fw-bolder">일반 상품</h5>
-                                ₩39,000
-                            </div>
-                        </div>
-                        <!-- 액션 버튼-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">장바구니에 추가</a></div>
-                        </div>
-                    </div>
-                </div>
+    				<div class="col mb-5">
+       				 <div class="card h-100">
+        			    <img class="card-img-top" src="${pageContext.request.contextPath}/resources/assets/<%=music.getFilename()%>" alt="음악 이미지" />
+        			    <div class="card-body p-4">
+       			         <div class="text-center">
+                   			<h5 class="fw-bolder"><%=music.getMusicTitle()%></h5>
+                  		  	<p><%=music.getMusicSinger()%></p>
+                   			 ₩<%=music.getUnitPrice()%>
+              			  </div>
+            		</div>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">장바구니에 추가</a></div>
+            </div>
+        </div>
+    </div>
+	<% 
+		} 
+	%>
+                
 
                 <!-- 필요시 더 추가 가능 -->
 
