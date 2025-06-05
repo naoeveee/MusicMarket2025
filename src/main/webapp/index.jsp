@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>쇼핑 홈페이지 - Start Bootstrap 템플릿</title>
+    <title>MusicMarket</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -16,7 +16,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <a class="navbar-brand" href="#">멜로캐치</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -31,10 +31,10 @@
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">쇼핑</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">전체 상품</a></li>
+                            <li><a class="dropdown-item" href="#">전체 음악</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#">인기 상품</a></li>
-                            <li><a class="dropdown-item" href="#">신상품</a></li>
+                            <li><a class="dropdown-item" href="#">인기 음악</a></li>
+                            <li><a class="dropdown-item" href="#">최신 음악</a></li>
                         </ul>
                     </li>
                 </ul>
