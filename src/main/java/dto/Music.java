@@ -13,7 +13,9 @@ public class Music implements Serializable {
 	private String releaseDate; //date
 	private Boolean discountCheck; //discount
 	private String filename; //image file name
+	private int quantity; //장바구니에 담은 음악 개수
 	
+
 	public Music() {
 		super();
 	}
@@ -78,6 +80,14 @@ public class Music implements Serializable {
 
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+	
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	
