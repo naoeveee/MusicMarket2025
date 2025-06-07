@@ -15,7 +15,9 @@
         <display-name>MusicMarket Security</display-name>
         <web-resource-collection>
             <web-resource-name>MusicMarket</web-resource-name>
+
             <url-pattern>/logintest.jsp</url-pattern>
+
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
@@ -39,13 +41,13 @@
     </error-page>
     
 
-    <!-- 로그 필터 등록 
+    <!-- 로그 필터 등록 -->
     <filter>
         <filter-name>LogFileFilter</filter-name>
         <filter-class>filter.LogFileFilter</filter-class>
         <init-param>
             <param-name>filename</param-name>
-            <param-value>c:\\Logs\\bookmarket.log</param-value>
+            <param-value>c:\\Logs\\musicmarket.log</param-value>
         </init-param>
     </filter>
 
@@ -53,7 +55,7 @@
         <filter-name>LogFileFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    -->
+    
     
     
     <!-- 
