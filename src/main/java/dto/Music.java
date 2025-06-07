@@ -13,6 +13,9 @@ public class Music implements Serializable {
 	private String releaseDate; //date
 	private Boolean discountCheck; //discount
 	private String filename; //image file name
+	private String description;
+	private String genre;
+	private String format;
 	
 	public Music() {
 		super();
@@ -79,6 +82,26 @@ public class Music implements Serializable {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+     
+    public String getDescription() {
+	        return description;
+	    }
+    public void setDescription(String description) {
+	        this.description = description;
+	    }
+	public String getGenre() {
+        return genre;
+    }
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
 
+  
+    public String getFormat() {
+        return format;
+    }
+    public void setFormat(String format) {
+        this.format = format;
+    }
 	
 }
