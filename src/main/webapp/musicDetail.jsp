@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="dto.Music" %>
 <%@ page import="dao.MusicRepository" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>음악 상세 정보</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS (CDN 권장) -->
@@ -25,7 +25,7 @@ function addToCart() {
     <%@ include file="menu.jsp" %>
     <div class="py-5 mb-4 bg-light rounded-3">
         <div class="container-fluid py-4">
-            <h1 class="display-5 fw-bold">음악정보</h1>
+            <h1 class="display-5 fw-bold">음악 상세정보</h1>
             <p class="col-md-8 fs-4">MusicInfo</p>
         </div>
     </div>
@@ -46,9 +46,15 @@ function addToCart() {
                         <li class="list-group-item"><b>가수 :</b> <%=music.getMusicSinger() %></li>
                         <li class="list-group-item"><b>음악코드 :</b> <span class="badge bg-danger"><%=music.getMusicId() %></span></li>
                         <li class="list-group-item"><b>출시일 :</b> <%=music.getReleaseDate() %></li>
+                         <li class="list-group-item"><b>장르 :</b> <%=music.getGenre() %></li>
+                         <li class="list-group-item"><b>설명 :</b> <%=music.getDescription() %></li>
+                         <li class="list-group-item"><b>포맷 :</b> <%=music.getFormat() %></li>
                         <li class="list-group-item"><b>할인여부 :</b>
                             <%=music.getDiscountCheck() != null && music.getDiscountCheck() ? "할인 적용" : "할인 없음" %>
                         </li>
+                       
+                        
+                        
                     </ul>
                     <h4 class="mb-4 text-primary"><%=music.getUnitPrice() %>원</h4>
                     <form name="addForm" action="./addCart.jsp?id=<%=music.getMusicId()%>" method="post" class="d-inline">
