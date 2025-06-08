@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="dto.Music" %>
 <%@ page import="dao.MusicRepository" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -33,6 +33,33 @@ function addToCart() {
         String id = request.getParameter("id");
         MusicRepository dao = MusicRepository.getInstance();
         Music music = dao.getMusicById(id);
+
+        // 장바구니 세션 관리
+        ArrayList<Music> cart = (ArrayList<Music>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<Music>();
+            session.setAttribute("cart", cart);
+        }
+
+        // 장바구니에 추가 요청 처리
+        String addCart = request.getParameter("addCart");
+        if ("true".equals(addCart) && music != null) {
+            boolean exists = false;
+            for (Music m : cart) {
+                if (m.getMusicId().equals(music.getMusicId())) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                cart.add(music);
+            }
+    %>
+            <div class="alert alert-success mt-3" role="alert">
+                장바구니에 음악이 추가되었습니다! <a href="cart.jsp" class="alert-link">장바구니로 이동</a>
+            </div>
+    <%
+        }
     %>
     <div class="row align-items-center">
         <div class="col-md-5 text-center">
@@ -46,22 +73,19 @@ function addToCart() {
                         <li class="list-group-item"><b>가수 :</b> <%=music.getMusicSinger() %></li>
                         <li class="list-group-item"><b>음악코드 :</b> <span class="badge bg-danger"><%=music.getMusicId() %></span></li>
                         <li class="list-group-item"><b>출시일 :</b> <%=music.getReleaseDate() %></li>
-                         <li class="list-group-item"><b>장르 :</b> <%=music.getGenre() %></li>
-                         <li class="list-group-item"><b>설명 :</b> <%=music.getDescription() %></li>
-                         <li class="list-group-item"><b>포맷 :</b> <%=music.getFormat() %></li>
+                        <li class="list-group-item"><b>장르 :</b> <%=music.getGenre() %></li>
+                        <li class="list-group-item"><b>설명 :</b> <%=music.getDescription() %></li>
+                        <li class="list-group-item"><b>포맷 :</b> <%=music.getFormat() %></li>
                         <li class="list-group-item"><b>할인여부 :</b>
                             <%=music.getDiscountCheck() != null && music.getDiscountCheck() ? "할인 적용" : "할인 없음" %>
                         </li>
-                       
-                        
-                        
                     </ul>
                     <h4 class="mb-4 text-primary"><%=music.getUnitPrice() %>원</h4>
-                    <form name="addForm" action="./addCart.jsp?id=<%=music.getMusicId()%>" method="post" class="d-inline">
+                    <form name="addForm" action="musicDetail.jsp?id=<%=music.getMusicId()%>&addCart=true" method="post" class="d-inline">
                         <button type="button" class="btn btn-info me-2" onclick="addToCart()">음악주문 &raquo;</button>
                     </form>
-                    <a href="./cart.jsp" class="btn btn-warning me-2">장바구니 &raquo;</a>
-                    <a href="./index.jsp" class="btn btn-secondary">음악 목록 &raquo;</a>
+                    <a href="cart.jsp" class="btn btn-warning me-2">장바구니 &raquo;</a>
+                    <a href="index.jsp" class="btn btn-secondary">음악 목록 &raquo;</a>
                 </div>
             </div>
         </div>

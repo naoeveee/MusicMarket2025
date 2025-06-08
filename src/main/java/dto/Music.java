@@ -16,6 +16,7 @@ public class Music implements Serializable {
 	private String description;
 	private String genre;
 	private String format;
+	private int quantity;
 	
 	public Music() {
 		super();
@@ -102,6 +103,13 @@ public class Music implements Serializable {
     }
     public void setFormat(String format) {
         this.format = format;
+    }
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 	
 }
