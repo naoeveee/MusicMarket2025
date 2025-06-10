@@ -17,6 +17,7 @@ public class Music implements Serializable {
 	private String description; // 곡 설명
 	private String genre;       // 장르
 	private String format;      // 음원 포맷
+	private int quantity; 
 	
 	
 	public Music() {
@@ -106,6 +107,14 @@ public class Music implements Serializable {
 	}
 	public void setFormat(String format) {
 	    this.format = format;
+	}
+	
+	public int getQuantity() {
+	    return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+	    this.quantity = quantity;
 	}
 
 	
