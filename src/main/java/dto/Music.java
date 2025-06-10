@@ -1,3 +1,4 @@
+
 package dto;
 
 import java.io.Serializable;
@@ -13,9 +14,11 @@ public class Music implements Serializable {
 	private String releaseDate; //date
 	private Boolean discountCheck; //discount
 	private String filename; //image file name
-	private int quantity; //장바구니에 담은 음악 개수
+	private String description; // 곡 설명
+	private String genre;       // 장르
+	private String format;      // 음원 포맷
 	
-
+	
 	public Music() {
 		super();
 	}
@@ -50,6 +53,7 @@ public class Music implements Serializable {
 		this.unitPrice = unitPrice;
 	}
 
+	
 	public String getMusicSinger() {
 		return musicSinger;
 	}
@@ -81,13 +85,27 @@ public class Music implements Serializable {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
-	
-	public int getQuantity() {
-		return quantity;
+	public String getDescription() {
+	    return description;
+	}
+	public void setDescription(String description) {
+	    this.description = description;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	// genre
+	public String getGenre() {
+	    return genre;
+	}
+	public void setGenre(String genre) {
+	    this.genre = genre;
+	}
+
+	// format
+	public String getFormat() {
+	    return format;
+	}
+	public void setFormat(String format) {
+	    this.format = format;
 	}
 
 	
