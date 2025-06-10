@@ -23,6 +23,7 @@ public class MusicRepository {
 		music1.setGenre("힙합");
 		music1.setFormat("CD");
 		
+		
 	
 
 		Music music2 = new Music("02","LOVE DIVE", 6500);
