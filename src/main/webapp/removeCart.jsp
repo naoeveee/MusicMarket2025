@@ -14,6 +14,7 @@ if (id == null || id.trim().equals("")) {
 }
 
 
+
 ArrayList<Music> cart = (ArrayList<Music>) session.getAttribute("cart");
 if (cart != null) {
     for (int i = 0; i < cart.size(); i++) {
