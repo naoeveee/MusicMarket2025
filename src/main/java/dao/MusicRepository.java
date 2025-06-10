@@ -21,6 +21,7 @@ public class MusicRepository {
 		music1.setDescription("지드래곤의 감성적인 곡입니다.");
 		music1.setGenre("힙합");
 		music1.setFormat("CD");
+		
 	
 
 		

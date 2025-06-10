@@ -57,7 +57,7 @@
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center">
                                 <a class="btn btn-outline-dark mt-auto" href="#">장바구니에 추가</a>
-                                <a class="btn btn-primary mt-auto ms-2" href="musicDetail.jsp?id=<%=music.getMusicId()%>">상세정보</a>
+                                <a class="btn btn-primary mt-auto ms-2"href="musicDetail.jsp?id=<%=music.getMusicId()%>">상세정보</a>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
         } 
     %>
             </div>
-        </div>
+      </div>
     </section>
 
     <!-- Footer-->
