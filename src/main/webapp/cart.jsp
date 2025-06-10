@@ -38,6 +38,7 @@
             <i class="bi bi-bag-check"></i> 주문하기
         </a>
     </div>
+    
 
     <div class="table-responsive">
         <table class="table table-hover cart-table align-middle shadow-sm">

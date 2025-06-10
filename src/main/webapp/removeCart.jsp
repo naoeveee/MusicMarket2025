@@ -9,6 +9,7 @@ String id = request.getParameter("id");
 if (id == null || id.trim().equals("")) {
     response.sendRedirect("cart.jsp");
     
+    
     return;
 }
 
