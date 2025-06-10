@@ -87,7 +87,7 @@
 			</tr>
 			<%
 				int sum = 0;
-				ArrayList<Music> cartList = (ArrayList<Music>) session.getAttribute("cartlist");
+				ArrayList<Music> cartList = (ArrayList<Music>) session.getAttribute("cart");
 				if (cartList == null)
 					cartList = new ArrayList<Music>();
 				for (int i = 0; i < cartList.size(); i++) { // 상품리스트 하나씩 출력하기
