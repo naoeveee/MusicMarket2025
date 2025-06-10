@@ -38,7 +38,6 @@
             <i class="bi bi-bag-check"></i> 주문하기
         </a>
     </div>
-    
 
     <div class="table-responsive">
         <table class="table table-hover cart-table align-middle shadow-sm">
@@ -79,7 +78,6 @@
                     <td><%=music.getMusicSinger()%></td>
                     <td><%=music.getUnitPrice()%>원</td>
                     <td><%=music.getQuantity()%></td>
-                    
                     <td><%=total%>원</td>
                     <td>
                         <a href="./removeCart.jsp?id=<%=music.getMusicId()%>" class="btn btn-outline-danger btn-sm">
@@ -104,6 +102,7 @@
             <% } %>
         </table>
     </div>
+    
     <div class="text-end mt-3">
         <a href="index.jsp" class="btn btn-secondary">&laquo; 쇼핑 계속하기</a>
     </div>

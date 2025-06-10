@@ -11,6 +11,7 @@ if (id == null || id.trim().equals("")) {
     response.sendRedirect("index.jsp");
     return;
     
+    
 }
 
 MusicRepository dao = MusicRepository.getInstance();
@@ -51,5 +52,10 @@ if (cnt == 0) {
     cart.add(goods);
 }
 
-response.sendRedirect("musicDetail.jsp?id=" + id);
+String redirect = request.getParameter("redirect");
+if ("cart".equals(redirect)) {
+    response.sendRedirect("cart.jsp");
+} else {
+    response.sendRedirect("musicDetail.jsp?id=" + id);
+}
 %>
