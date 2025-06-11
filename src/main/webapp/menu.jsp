@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
@@ -9,7 +8,6 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -20,15 +18,23 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/about.jsp">소개</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownShopping" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">쇼핑</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownShopping">
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/musics.jsp">전체 음악</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/popular.jsp">인기 음악</a></li>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/new.jsp">최신 음악</a></li>
-                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/addMusic.jsp">음악 등록</a></li>
-                        
+                    </ul>
+                </li>
+                <!-- 음악 관리 드롭다운 메뉴 추가 -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownManage" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">음악 관리</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownManage">
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/addMusic.jsp">음악 업로드</a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/editMusic.jsp">음악 수정</a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/deleteMusic.jsp">음악 삭제</a></li>
                     </ul>
                 </li>
             </ul>
