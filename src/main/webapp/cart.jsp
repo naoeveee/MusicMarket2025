@@ -2,6 +2,23 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dto.Music" %>
+
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%
+    String loginUser = (String) session.getAttribute("sessionId");
+
+    if (loginUser == null) {
+        // 로그인 안 된 경우, 현재 페이지의 주소를 originalUrl에 저장
+        String currentUrl = request.getRequestURI();
+        session.setAttribute("originalUrl", currentUrl);
+
+        // 로그인 페이지로 리디렉션
+        response.sendRedirect(request.getContextPath() + "/member/loginMember.jsp");
+        return;
+    }
+%>
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
