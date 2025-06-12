@@ -35,6 +35,11 @@ function addToCart() {
         String id = request.getParameter("id");
         MusicRepository dao = MusicRepository.getInstance();
         Music music = dao.getMusicById(id);
+        
+        if (music == null) {
+            response.sendRedirect("exceptionNoMusicId.jsp");
+            return;
+        }
 
         // 장바구니 세션 관리
         ArrayList<Music> cart = (ArrayList<Music>) session.getAttribute("cart");

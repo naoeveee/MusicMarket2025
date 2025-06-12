@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dto.Music" %>
+<%@ page errorPage="exceptionNoMusicId.jsp" %>
 <jsp:useBean id="musicDAO" class="dao.MusicRepository" scope="session" />
 <!DOCTYPE html>
 <html lang="ko">
