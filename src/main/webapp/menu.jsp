@@ -1,4 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String sessionId = (String) session.getAttribute("sessionId");
+%>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp">멜로캐치</a>

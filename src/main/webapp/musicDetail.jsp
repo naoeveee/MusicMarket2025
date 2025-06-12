@@ -20,6 +20,7 @@ function addToCart() {
     } else {
         document.addForm.reset();
     }
+    
 }
 </script>
 <div class="container py-4">

@@ -6,6 +6,7 @@ import dto.Music;
 
 public class MusicRepository {
 
+
     private static MusicRepository instance = new MusicRepository();
 
     public static MusicRepository getInstance() {
