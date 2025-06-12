@@ -64,9 +64,8 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <%
-    // 세션 종료 및 배송 관련 쿠키 삭제
-    session.invalidate();
-
+  
+   // 배송 관련 쿠키만 삭제
     if (cookies != null) {
         for (int i = 0; i < cookies.length; i++) {
             Cookie thisCookie = cookies[i];
