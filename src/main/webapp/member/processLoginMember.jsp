@@ -1,29 +1,48 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ page import="java.sql.*, javax.sql.*" %>
+
 <%
-	request.setCharacterEncoding("UTF-8");
+    request.setCharacterEncoding("UTF-8");
 
-	String id = request.getParameter("id");
-	String password = request.getParameter("password");
+    String id = request.getParameter("id");
+    String password = request.getParameter("password");
+
+    boolean loginSuccess = false;
+
+    try {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection(
+            "jdbc:mysql://localhost:3306/MusicMarketDB", "root", "1234");
+
+        String sql = "SELECT * FROM member WHERE id=? AND password=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, id);
+        pstmt.setString(2, password);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            loginSuccess = true;
+            session.setAttribute("sessionId", id);
+        }
+
+        rs.close();
+        pstmt.close();
+        conn.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    if (loginSuccess) {
+        String originalUrl = (String) session.getAttribute("originalUrl");
+        if (originalUrl != null) {
+            session.removeAttribute("originalUrl"); // 한번 사용하고 제거
+            response.sendRedirect(originalUrl);
+        } else {
+            response.sendRedirect("resultMember.jsp?msg=2"); // 기본 페이지
+        }
+    } else {
+        response.sendRedirect("loginMember.jsp?error=1");
+    }
+
 %>
-
-<sql:setDataSource var="dataSource"
-	url="jdbc:mysql://localhost:3306/MusicMarketDB"
-	driver="com.mysql.jdbc.Driver" user="root" password="1234" />
-
-<sql:query dataSource="${dataSource}" var="resultSet">
-   SELECT * FROM MEMBER WHERE ID=? and password=?  
-   <sql:param value="<%=id%>" />
-	<sql:param value="<%=password%>" />
-</sql:query>
-
-<c:forEach var="row" items="${resultSet.rows}">
-	<%
-		session.setAttribute("sessionId", id);
-	%>
-	<c:redirect url="resultMember.jsp?msg=2" />
-</c:forEach>
-
-<c:redirect url="loginMember.jsp?error=1" />

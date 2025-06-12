@@ -8,13 +8,13 @@
     // 여기서는 간단히 "admin"/"1234"로만 로그인 성공 처리
     boolean loginSuccess = false;
 
-    if ("admin".equals(username) && "1234".equals(password)) {
+    if ("admin".equals(username) && "admin1234".equals(password)) {
         loginSuccess = true;
     }
 
     if (loginSuccess) {
         // 로그인 성공 시 세션에 사용자 정보 저장
-        session.setAttribute("loginUser", username);
+        session.setAttribute("sessionId", username);
 
         // 원래 가려던 페이지가 있으면 그쪽으로, 없으면 index.jsp로 이동
         String originalUrl = (String) session.getAttribute("originalUrl");

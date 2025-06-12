@@ -1,6 +1,34 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.sql.*" %>
 <%@ include file="dbconn.jsp" %>
+
+<%
+    String loginUser = (String) session.getAttribute("sessionId");
+    if (loginUser == null || !loginUser.equals("admin")) {
+%>
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>접근 권한 없음</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container py-5">
+            <div class="alert alert-danger text-center" role="alert">
+                <h4 class="alert-heading">⚠ 접근 권한이 없습니다</h4>
+                <p>이 페이지는 <strong>관리자(admin)</strong>만 접근할 수 있습니다.</p>
+                <hr>
+                <a href="<%= request.getContextPath() %>/index.jsp" class="btn btn-primary">메인으로 돌아가기</a>
+            </div>
+        </div>
+    </body>
+    </html>
+<%
+        return;
+    }
+%>
+
 <%
 String musicId = request.getParameter("id");
 PreparedStatement pstmt = null;
@@ -28,8 +56,7 @@ if (conn != null) conn.close();
 
 response.sendRedirect("editMusic.jsp?edit=delete");
 %>
-<!DOCTYPE html>
-<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <title>음악 삭제 처리</title>
