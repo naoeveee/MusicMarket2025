@@ -60,15 +60,15 @@
     
     
     
-    <!-- 
+    <!--servlet -->
     <servlet>
-    	<servlet-name>myController</servlet-name>
-    	<servlet-class>mvc.controller.myController</servlet-class>
+    	<servlet-name>BoardController</servlet-name>
+    	<servlet-class>mvc.controller.BoardController</servlet-class>
     </servlet>
     <servlet-mapping>
-    	<servlet-name>myController</servlet-name>
+    	<servlet-name>BoardController</servlet-name>
     	<url-pattern>*.do</url-pattern>
     </servlet-mapping>
-    -->
+    
 
 </web-app>
