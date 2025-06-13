@@ -44,6 +44,7 @@
                     </ul>
                 </li>
                 
+                
                 <!-- login -->
                 <c:choose>
       			<c:when test="${empty sessionId}">
@@ -56,20 +57,34 @@
 				<li class="nav-item"><a class="nav-link" href="<c:url value="/member/updateMember.jsp"/>">회원 수정</a></li>
 			</c:otherwise>
       </c:choose>
+      
                 
                 
                 
             </ul>
 
-            <form class="d-flex" action="${pageContext.request.contextPath}/cart.jsp" method="get">
-                <button class="btn btn-outline-dark" type="submit">
-                    <i class="bi-cart-fill me-1"></i>
-                    장바구니
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">
-                        <%= session.getAttribute("cartCount") != null ? session.getAttribute("cartCount") : 0 %>
-                    </span>
-                </button>
-            </form>
-        </div>
-    </div>
+            <!-- 게시판 + 장바구니 버튼 함께 배치 -->
+<div class="d-flex">
+    <!-- 게시판 버튼 -->
+	<form action="${pageContext.request.contextPath}/BoardListAction.do" method="get" style="margin-right: 10px;">
+    	<input type="hidden" name="pageNum" value="1" />
+   	 	<button class="btn btn-outline-primary" type="submit">
+        	<i class="bi bi-chat-dots"></i>
+        		게시판
+    	</button>
+	</form>
+
+
+    <!-- 장바구니 버튼 -->
+    <form action="${pageContext.request.contextPath}/cart.jsp" method="get">
+        <button class="btn btn-outline-dark" type="submit">
+            <i class="bi-cart-fill me-1"></i>
+            장바구니
+            <span class="badge bg-dark text-white ms-1 rounded-pill">
+                <%= session.getAttribute("cartCount") != null ? session.getAttribute("cartCount") : 0 %>
+            </span>
+        </button>
+    </form>
+</div>
+</div>
 </nav>
