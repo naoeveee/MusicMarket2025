@@ -20,16 +20,13 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/index.jsp">홈</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/about.jsp">소개</a>
-                </li>
+                
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownShopping" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">쇼핑</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownShopping">
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/index.jsp">전체 음악</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/popular.jsp">인기 음악</a></li>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/new.jsp">최신 음악</a></li>
                     </ul>
                 </li>

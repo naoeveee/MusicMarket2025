@@ -125,8 +125,10 @@
         <a href="index.jsp" class="btn btn-secondary">&laquo; 쇼핑 계속하기</a>
     </div>
     <jsp:include page="footer.jsp" />
+    <!-- Bootstrap JS (필수) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>	
 </div>
-<!-- Bootstrap JS (CDN) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

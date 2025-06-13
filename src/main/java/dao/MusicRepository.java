@@ -93,4 +93,49 @@ public class MusicRepository {
         }
         return music;
     }
+    
+ // 최신순으로 정렬된 음악 목록 가져오기
+    public ArrayList<Music> getNewMusics() {
+        ArrayList<Music> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/MusicMarketDB",
+                "root", "1234"
+            );
+
+            // 발매일 내림차순 정렬
+            String sql = "SELECT * FROM music ORDER BY release_date DESC";
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Music music = new Music(
+                    rs.getString("music_id"),
+                    rs.getString("music_title"),
+                    rs.getInt("unit_price")
+                );
+                music.setMusicSinger(rs.getString("music_singer"));
+                music.setReleaseDate(rs.getString("release_date"));
+                music.setDiscountCheck(rs.getBoolean("discount_check"));
+                music.setFilename(rs.getString("filename"));
+                music.setDescription(rs.getString("description"));
+                music.setGenre(rs.getString("genre"));
+                music.setFormat(rs.getString("format"));
+                list.add(music);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (pstmt != null) pstmt.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
+        }
+        return list;
+    }
+
 }
