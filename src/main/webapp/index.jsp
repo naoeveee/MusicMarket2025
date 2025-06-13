@@ -73,8 +73,12 @@
         </div>
     </section>
 
+    <!-- 푸터 include -->
     <%@ include file="footer.jsp" %>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
+
+<!-- Bootstrap JS (필수) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>	
 </body>
 </html>
