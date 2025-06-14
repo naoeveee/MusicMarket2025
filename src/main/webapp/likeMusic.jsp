@@ -6,8 +6,8 @@
     String action = request.getParameter("action");
 
     if (sessionId == null) {
-        session.setAttribute("originalUrl", "index.jsp");
-        response.sendRedirect("login.jsp");
+        
+        response.sendRedirect("member/loginMember.jsp");
         return;
     }
 
