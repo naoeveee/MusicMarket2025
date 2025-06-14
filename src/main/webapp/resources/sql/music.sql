@@ -10,3 +10,4 @@ CREATE TABLE music (
     genre         VARCHAR(50),
     format        VARCHAR(50)
 );
+ALTER TABLE music ADD COLUMN like_count INT DEFAULT 0;
