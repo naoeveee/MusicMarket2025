@@ -35,6 +35,24 @@
                 shipping_addressName = URLDecoder.decode((thisCookie.getValue()), "utf-8");
         }
     }
+
+    // ---- 주문 완료 시 '구매한 곡' 플레이리스트에 자동 추가 ----
+    String userId = (String) session.getAttribute("sessionId");
+    ArrayList<Music> cartList = (ArrayList<Music>) session.getAttribute("cart");
+    if (userId != null && cartList != null && !cartList.isEmpty()) {
+        try {
+            // 1. '구매한 곡' 플레이리스트 ID 조회(없으면 생성)
+            int playlistId = MusicRepository.getInstance().getOrCreatePurchasedPlaylistId(userId);
+
+            // 2. 각 곡을 플레이리스트에 추가 (중복 방지)
+            for (Music music : cartList) {
+                MusicRepository.getInstance().addMusicToPlaylistIfNotExists(playlistId, music.getMusicId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    // ---------------------------------------------------------
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -149,8 +167,6 @@
             <p class="fs-4 mb-0 text-white-50">Order Info</p>
         </div>
     </div>
-
-    
     <div class="order-receipt-card">
         <div class="text-center mb-4">
             <h1><i class="bi bi-receipt me-2"></i>영수증</h1>
@@ -179,7 +195,6 @@
                 <tbody>
                 <%
                     int sum = 0;
-                    ArrayList<Music> cartList = (ArrayList<Music>) session.getAttribute("cart");
                     if (cartList == null)
                         cartList = new ArrayList<Music>();
                     for (int i = 0; i < cartList.size(); i++) {
@@ -217,7 +232,6 @@
         </div>
     </div>
 
- 
     <footer class="footer-music mt-5">
         <div class="container">
             <div class="row align-items-center">
@@ -231,7 +245,6 @@
                     <a href="#" class="text-white mx-2 fs-5"><i class="bi bi-facebook"></i></a>
                     <a href="#" class="text-white mx-2 fs-5"><i class="bi bi-twitter"></i></a>
                 </div>
-                
             </div>
         </div>
     </footer>

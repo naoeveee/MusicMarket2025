@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="dto.Music" %>
 <%@ page import="dao.MusicRepository" %>
-<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -85,6 +84,27 @@
             background: #e0e0e0;
             color: #333;
         }
+        .audio-player-container {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .audio-player-label {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #8f5cf7;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .audio-player-alert {
+            font-size: 1.07rem;
+            color: #f44336;
+            background: #fff3f3;
+            border-radius: 1em;
+            padding: 0.7em 1.1em;
+            margin-top: 1.2em;
+            display: inline-block;
+        }
         @media (max-width: 991px) {
             .music-title { font-size: 1.5rem; }
             .music-price { font-size: 1.4rem; }
@@ -92,15 +112,6 @@
     </style>
 </head>
 <body>
-<script type="text/javascript">
-function addToCart() {
-    if (confirm("음악을 장바구니에 추가하시겠습니까?")) {
-        document.addForm.submit();
-    } else {
-        document.addForm.reset();
-    }
-}
-</script>
 <div class="container py-4">
     <%@ include file="menu.jsp" %>
     <div class="py-5 mb-4" style="background: linear-gradient(90deg,#ff416c,#c1b6f7); border-radius:2rem;">
@@ -111,46 +122,35 @@ function addToCart() {
     </div>
     <%
         String id = request.getParameter("id");
+        if (id == null || id.trim().equals("")) {
+            response.sendRedirect("index.jsp");
+            return;
+        }
         MusicRepository dao = MusicRepository.getInstance();
         Music music = dao.getMusicById(id);
-        
         if (music == null) {
             response.sendRedirect("exceptionNoMusicId.jsp");
             return;
         }
-
-        // 장바구니 세션 관리
-        ArrayList<Music> cart = (ArrayList<Music>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new ArrayList<Music>();
-            session.setAttribute("cart", cart);
-        }
-
-        // 장바구니에 추가 요청 처리
-        String addCart = request.getParameter("addCart");
-        if ("true".equals(addCart) && music != null) {
-            boolean exists = false;
-            for (Music m : cart) {
-                if (m.getMusicId().equals(music.getMusicId())) {
-                    exists = true;
-                    break;
-                }
-            }
-            if (!exists) {
-                cart.add(music);
-            }
-    %>
-            <div class="alert alert-success mt-3" role="alert">
-                <i class="bi bi-check-circle-fill me-2"></i>
-                장바구니에 음악이 추가되었습니다! <a href="cart.jsp" class="alert-link">장바구니로 이동</a>
-            </div>
-    <%
-        }
+        String audioFile = music.getAudioFilename();
     %>
     <div class="row align-items-center justify-content-center">
         <div class="col-lg-5 mb-4 mb-lg-0 text-center">
             <div class="album-card p-4">
                 <img src="./resources/assets/<%=music.getFilename()%>" class="img-fluid album-img" alt="음악 이미지">
+                <div class="audio-player-container">
+                    <span class="audio-player-label"><i class="bi bi-play-circle"></i> 전체 곡 듣기</span>
+                    <% if(audioFile != null && !audioFile.trim().isEmpty()) { %>
+                        <audio controls style="width:90%; border-radius: 0.7em; box-shadow: 0 2px 8px rgba(80,40,120,0.08);">
+                            <source src="resources/audio/<%=audioFile%>" type="audio/mpeg">
+                            브라우저가 오디오 태그를 지원하지 않습니다.
+                        </audio>
+                    <% } else { %>
+                        <div class="audio-player-alert">
+                            <i class="bi bi-exclamation-circle"></i> 음원 파일이 등록되어 있지 않습니다.
+                        </div>
+                    <% } %>
+                </div>
             </div>
         </div>
         <div class="col-lg-7">
@@ -174,8 +174,8 @@ function addToCart() {
                 <div class="mb-4">
                     <span class="music-price"><i class="bi bi-cash-coin me-2"></i><%=music.getUnitPrice() %>원</span>
                 </div>
-                <form name="addForm" action="musicDetail.jsp?id=<%=music.getMusicId()%>&addCart=true" method="post" class="d-inline">
-                    <button type="button" class="btn music-action-btn btn-info me-2" onclick="addToCart()">
+                <form action="addCart.jsp?id=<%=music.getMusicId()%>&redirect=cart" method="post" class="d-inline">
+                    <button type="submit" class="btn music-action-btn btn-info me-2">
                         <i class="bi bi-bag-plus-fill me-1"></i>음악주문
                     </button>
                 </form>

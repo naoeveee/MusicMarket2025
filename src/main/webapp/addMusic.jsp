@@ -120,7 +120,9 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
                 <div class="music-form-card p-5">
+                    <!-- enctype="multipart/form-data" 반드시 유지 -->
                     <form name="newMusic" action="processAddMusic.jsp" method="post" enctype="multipart/form-data">
+                        <!-- 기존 입력란들 ... -->
                         <div class="mb-4">
                             <label for="musicId" class="form-label music-form-label"><i class="bi bi-upc-scan me-1"></i><fmt:message key="musicId" /></label>
                             <div class="input-group">
@@ -182,6 +184,14 @@
                             <label for="musicImage" class="form-label music-form-label"><i class="bi bi-image me-1"></i><fmt:message key="musicImage" /></label>
                             <input class="form-control" type="file" id="musicImage" name="musicImage" accept="image/*">
                         </div>
+                        <!-- [추가] mp3 파일 업로드 필드 -->
+                        <div class="mb-4">
+                            <label for="musicAudio" class="form-label music-form-label">
+                                <i class="bi bi-music-note-beamed me-1"></i>음원 파일 업로드 (MP3)
+                            </label>
+                            <input class="form-control" type="file" id="musicAudio" name="musicAudio" accept=".mp3,audio/mpeg" required>
+                        </div>
+                        <!-- // mp3 업로드 필드 끝 -->
                         <div class="d-grid gap-3">
                             <button type="button" class="btn btn-primary btn-lg" onclick="CheckAddMusic();"><i class="bi bi-upload me-1"></i><fmt:message key="submitButton" /></button>
                             <button type="reset" class="btn btn-outline-secondary btn-lg"><i class="bi bi-x-circle me-1"></i><fmt:message key="resetButton" /></button>
