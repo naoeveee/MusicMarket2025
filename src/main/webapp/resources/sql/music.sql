@@ -11,3 +11,4 @@ CREATE TABLE music (
     format        VARCHAR(50)
 );
 ALTER TABLE music ADD COLUMN like_count INT DEFAULT 0;
+ALTER TABLE music ADD COLUMN audio_filename VARCHAR(200);

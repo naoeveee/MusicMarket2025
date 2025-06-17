@@ -18,6 +18,7 @@ public class Music implements Serializable {
     private String format;      // 음원 포맷
     private int quantity;
     private int likeCount; // 좋아요 개수
+    private String audioFilename;
 
     public Music() {
         super();
@@ -124,5 +125,11 @@ public class Music implements Serializable {
 
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
+    }
+    public String getAudioFilename() {
+        return audioFilename;
+    }
+    public void setAudioFilename(String audioFilename) {
+        this.audioFilename = audioFilename;
     }
 }

@@ -5,22 +5,84 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>음악 수정</title>
+    <title>음악 수정 | Mello-Catch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(120deg, #f8e8ff 0%, #e0f7fa 100%);
+        }
+        .edit-header {
+            background: linear-gradient(90deg,#ff416c,#c1b6f7);
+            border-radius: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .edit-header .display-5 {
+            color: #fff;
+            text-shadow: 0 2px 12px rgba(80,40,120,0.15);
+        }
+        .edit-card {
+            background: #fff;
+            border-radius: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(80,40,120,0.09);
+            padding: 2.2rem 2.2rem 1.8rem 2.2rem;
+            max-width: 950px;
+            margin: 0 auto 2.5rem auto;
+        }
+        .edit-img-preview {
+            width: 100%;
+            max-height: 350px;
+            object-fit: cover;
+            border-radius: 1.2rem;
+            box-shadow: 0 4px 16px 0 rgba(80,40,120,0.08);
+            background: #f8f9fa;
+            margin-bottom: 1.2rem;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #8f5cf7;
+        }
+        .form-control, .form-select {
+            border-radius: 1.1rem;
+            font-size: 1.07rem;
+            min-height: 2.3rem;
+        }
+        .form-check-input {
+            border-radius: 0.7em;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #8f5cf7 0%, #f59e42 100%);
+            border: none;
+            font-weight: 600;
+            border-radius: 1.2rem;
+            padding: 0.55em 2.2em;
+            font-size: 1.1rem;
+            transition: 0.18s;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #f59e42 0%, #8f5cf7 100%);
+        }
+        @media (max-width: 991px) {
+            .edit-card {
+                padding: 1.2rem 0.7rem 1rem 0.7rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container py-4">
 <%@ include file="menu.jsp" %>
-<div class="p-5 mb-4 bg-body-tertiary rounded-3">
-    <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold">음악 수정</h1>
-        <p class="col-md-8 fs-4">Music Updating</p>
+<header class="edit-header py-5 mb-4">
+    <div class="container px-4 px-lg-5 my-3">
+        <div class="text-center text-white">
+            <h1 class="display-5 fw-bolder mb-2"><i class="bi bi-pencil-square me-2"></i>음악 정보 수정</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Edit your music details with ease</p>
+        </div>
     </div>
-</div>
+</header>
 <%
 String musicId = request.getParameter("id");
 PreparedStatement pstmt = null;
@@ -31,79 +93,58 @@ pstmt.setString(1, musicId);
 rs = pstmt.executeQuery();
 if (rs.next()) {
 %>
-<div class="row align-items-md-stretch">
-    <div class="col-md-5">
-        <img src="./resources/assets/<%=rs.getString("filename")%>" alt="음악 이미지" style="width: 100%; max-height:350px; object-fit:cover;" />
-    </div>
-    <div class="col-md-7">
-        <form name="updateMusic" action="./processUpdateMusic.jsp" method="post" enctype="multipart/form-data">
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">ID</label>
-                <div class="col-sm-5">
+<div class="edit-card">
+    <div class="row g-4 align-items-center">
+        <div class="col-md-5">
+            <img src="./resources/assets/<%=rs.getString("filename")%>" alt="음악 이미지" class="edit-img-preview" />
+        </div>
+        <div class="col-md-7">
+            <form name="updateMusic" action="./processUpdateMusic.jsp" method="post" enctype="multipart/form-data" autocomplete="off">
+                <div class="mb-3">
+                    <label class="form-label">ID</label>
                     <input type="text" name="musicId" id="musicId" class="form-control" value='<%=rs.getString("music_id")%>' readonly>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">제목</label>
-                <div class="col-sm-5">
-                    <input type="text" name="musicTitle" id="musicTitle" class="form-control" value='<%=rs.getString("music_title")%>'>
+                <div class="mb-3">
+                    <label class="form-label">제목</label>
+                    <input type="text" name="musicTitle" id="musicTitle" class="form-control" value='<%=rs.getString("music_title")%>' required>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">가수</label>
-                <div class="col-sm-5">
-                    <input type="text" name="musicSinger" id="musicSinger" class="form-control" value='<%=rs.getString("music_singer")%>'>
+                <div class="mb-3">
+                    <label class="form-label">가수</label>
+                    <input type="text" name="musicSinger" id="musicSinger" class="form-control" value='<%=rs.getString("music_singer")%>' required>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">가격</label>
-                <div class="col-sm-5">
-                    <input type="number" name="unitPrice" id="unitPrice" class="form-control" value='<%=rs.getString("unit_price")%>' min="0">
+                <div class="mb-3">
+                    <label class="form-label">가격</label>
+                    <input type="number" name="unitPrice" id="unitPrice" class="form-control" value='<%=rs.getString("unit_price")%>' min="0" required>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">발매일</label>
-                <div class="col-sm-5">
-                    <input type="date" name="releaseDate" id="releaseDate" class="form-control" value='<%=rs.getString("release_date")%>'>
+                <div class="mb-3">
+                    <label class="form-label">발매일</label>
+                    <input type="date" name="releaseDate" id="releaseDate" class="form-control" value='<%=rs.getString("release_date")%>' required>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">설명</label>
-                <div class="col-sm-8">
-                    <textarea name="description" id="description" cols="50" rows="2" class="form-control" placeholder="5자 이상 적어주세요"><%=rs.getString("description") %></textarea>
+                <div class="mb-3">
+                    <label class="form-label">설명</label>
+                    <textarea name="description" id="description" cols="50" rows="2" class="form-control" placeholder="5자 이상 적어주세요" required><%=rs.getString("description") %></textarea>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">장르</label>
-                <div class="col-sm-5">
+                <div class="mb-3">
+                    <label class="form-label">장르</label>
                     <input type="text" name="genre" id="genre" class="form-control" value='<%=rs.getString("genre")%>'>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">포맷</label>
-                <div class="col-sm-5">
+                <div class="mb-3">
+                    <label class="form-label">포맷</label>
                     <input type="text" name="format" id="format" class="form-control" value='<%=rs.getString("format")%>'>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">할인</label>
-                <div class="col-sm-5 d-flex align-items-center">
-                    <input type="checkbox" name="discountCheck" id="discountCheck" value="on" <%=rs.getBoolean("discount_check") ? "checked" : ""%> >
-                    <label for="discountCheck" class="ms-2">할인 적용</label>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" name="discountCheck" id="discountCheck" class="form-check-input" value="on" <%=rs.getBoolean("discount_check") ? "checked" : ""%> >
+                    <label for="discountCheck" class="form-check-label">할인 적용</label>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">이미지</label>
-                <div class="col-sm-8">
+                <div class="mb-3">
+                    <label class="form-label">이미지 변경</label>
                     <input type="file" name="musicImage" class="form-control">
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <input type="submit" class="btn btn-primary" value="수정">
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-check-circle me-2"></i>수정 완료</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 <%
@@ -113,7 +154,6 @@ if (pstmt != null) pstmt.close();
 if (conn != null) conn.close();
 %>
 <jsp:include page="footer.jsp" />
-</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
 </body>
