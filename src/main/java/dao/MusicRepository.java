@@ -152,12 +152,13 @@ public class MusicRepository {
         return list;
     }
 
-    // [추가] 장르 기반 개인화 추천
+    //장르 기반 개인화 추천
     public List<Music> recommendForUser(String userId) {
         List<String> genres = new ArrayList<>();
         try (
             Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(
+            // [1] 사용자가 좋아요한 곡들의 장르별 집계 (많이 좋아요한 순서로)
                 "SELECT genre, COUNT(*) as cnt " +
                 "FROM music WHERE music_id IN (SELECT music_id FROM music_like WHERE user_id = ?) " +
                 "GROUP BY genre ORDER BY cnt DESC"
@@ -168,14 +169,14 @@ public class MusicRepository {
             while (rs.next()) {
                 String genre = rs.getString("genre");
                 if (genre != null && !genre.trim().isEmpty()) {
-                    genres.add(genre);
+                    genres.add(genre);    // [2] 선호 장르 리스트 생성
                 }
             }
         } catch(Exception e) {
             e.printStackTrace();
         }
 
-        if (genres.isEmpty()) return new ArrayList<>(); // 좋아요 이력이 없으면 추천 불가
+        if (genres.isEmpty()) return new ArrayList<>(); // [핵심3] 좋아요 이력 없으면 추천 불가
 
         List<Music> recs = new ArrayList<>();
         StringBuilder genreIn = new StringBuilder();
@@ -183,6 +184,7 @@ public class MusicRepository {
             genreIn.append("?");
             if (i < genres.size() - 1) genreIn.append(",");
         }
+        // [4] 선호 장르 내에서, 이미 좋아요한 곡은 제외하고, 좋아요 순으로 상위 10곡 추천
         String sql = "SELECT * FROM music WHERE genre IN (" + genreIn + ") " +
                      "AND music_id NOT IN (SELECT music_id FROM music_like WHERE user_id = ?) " +
                      "ORDER BY like_count DESC LIMIT 10";
@@ -195,6 +197,7 @@ public class MusicRepository {
             pstmt.setString(idx, userId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
+            	 // [5] 추천 곡 Music 객체로 생성
                 Music music = new Music(
                     rs.getString("music_id"),
                     rs.getString("music_title"),
@@ -209,7 +212,7 @@ public class MusicRepository {
                 music.setFormat(rs.getString("format"));
                 music.setLikeCount(rs.getInt("like_count"));
                 music.setAudioFilename(rs.getString("audio_filename"));
-                recs.add(music);
+                recs.add(music);   // [6] 추천 리스트에 추가
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -217,10 +220,13 @@ public class MusicRepository {
         return recs;
     }
 
-    // [추가] 협업 필터링 기반 추천
+    //협업 필터링 기반 추천
     public List<Music> recommendCollaborative(String userId) {
         List<Music> recs = new ArrayList<>();
         String sql =
+        		
+        		// [1] 나와 비슷한 곡을 좋아요한 다른 유저가 좋아요한 곡 중
+                //        내가 아직 좋아요하지 않은 곡을 공통 좋아요 많은 순으로 추천
             "SELECT m.*, COUNT(*) AS score " +
             "FROM music m JOIN music_like l ON m.music_id = l.music_id " +
             "WHERE l.user_id IN ( " +
@@ -235,11 +241,12 @@ public class MusicRepository {
             Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
-            pstmt.setString(1, userId);
-            pstmt.setString(2, userId);
-            pstmt.setString(3, userId);
+            pstmt.setString(1, userId);   // [2] 내 좋아요 곡을 좋아요한 유저 찾기
+            pstmt.setString(2, userId);   // [3] 자기 자신 제외
+            pstmt.setString(3, userId);   // [4] 내가 이미 좋아요한 곡 제외
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
+            	// [5] 추천 곡 Music 객체로 생성
                 Music music = new Music(
                     rs.getString("music_id"),
                     rs.getString("music_title"),
@@ -254,7 +261,7 @@ public class MusicRepository {
                 music.setFormat(rs.getString("format"));
                 music.setLikeCount(rs.getInt("like_count"));
                 music.setAudioFilename(rs.getString("audio_filename"));
-                recs.add(music);
+                recs.add(music);   // [6] 추천 리스트에 추가
             }
         } catch(Exception e) {
             e.printStackTrace();

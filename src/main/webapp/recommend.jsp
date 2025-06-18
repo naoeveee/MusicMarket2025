@@ -103,13 +103,15 @@
             response.sendRedirect("member/loginMember.jsp");
             return;
         }
-        List<Music> genreRecs = MusicRepository.getInstance().recommendForUser(sessionId);
-        List<Music> collabRecs = MusicRepository.getInstance().recommendCollaborative(sessionId);
+                                                                                          
+        List<Music> genreRecs = MusicRepository.getInstance().recommendForUser(sessionId);  // 사용자 세션 ID로 장르 기반 추천 리스트 조회
+        List<Music> collabRecs = MusicRepository.getInstance().recommendCollaborative(sessionId);   // 사용자 세션 ID로 협업 필터링 추천 리스트 조회
     %>
     <!-- 장르 기반 추천 -->
     <div class="section-title"><i class="bi bi-music-note-list me-1"></i>내가 좋아요한 장르 기반 추천</div>
     <div class="row justify-content-center">
         <%
+     // 추천 결과가 있을 때만 카드 반복 출력
             if (genreRecs != null && !genreRecs.isEmpty()) {
                 for (Music m : genreRecs) {
         %>
@@ -143,6 +145,7 @@
     <div class="section-title"><i class="bi bi-people-fill me-1"></i>비슷한 취향 유저 기반 추천</div>
     <div class="row justify-content-center">
         <%
+     // 협업 필터링 추천 결과가 있을 때만 카드 반복 출력
             if (collabRecs != null && !collabRecs.isEmpty()) {
                 for (Music m : collabRecs) {
         %>
